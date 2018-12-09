@@ -114,4 +114,16 @@ body {
   display: flex;
   flex-direction: row;
   justify-content: space-between;
+  /* flex-wrap: wrap-reverse; */
+}
+
+@media (max-width: 700px) {
+  .grid-container {
+    flex-direction: column-reverse;
+    justify-content: center;
+    align-items: center;
+  }
+  .margin_adj {
+    padding-top: 30px;
+  }
 }
