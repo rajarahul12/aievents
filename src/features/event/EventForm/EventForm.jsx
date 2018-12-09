@@ -22,7 +22,7 @@ class EventForm extends Component {
     }
   }
 
-  componentWillReceiveProps(nextProps) {
+  UNSAFE_componentWillReceiveProps(nextProps) {
     if (nextProps.selectedEvent !== this.props.selectedEvent) {
       this.setState({
         event: nextProps.selectedEvent || emptyEvent
