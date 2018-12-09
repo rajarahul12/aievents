@@ -13,6 +13,8 @@ export const decrementCounter = (state, payload) => {
   return { ...state, data: state.data - 1 };
 };
 
+//Reducing the boilerplate
+
 // const testReducer = (state = initialState, action) => {
 //   switch (action.type) {
 //     case INCREMENT_COUNTER:
