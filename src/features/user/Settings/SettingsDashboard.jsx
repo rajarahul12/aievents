@@ -9,7 +9,7 @@ import AccountPage from "./AccountPage";
 
 const SettingsDashboard = () => {
   return (
-    <div>
+    <div class="grid-container">
       <div>
         <Switch>
           <Redirect exact from="/settings" to="/settings/basic" />

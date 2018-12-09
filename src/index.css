@@ -108,3 +108,10 @@ body {
   padding-bottom: 0 !important;
   padding-left: 2em !important;
 }
+
+/* CSS GRid for SettingsDashboard */
+.grid-container {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
