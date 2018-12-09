@@ -32,6 +32,7 @@ class NavBar extends Component {
             School of AI
           </Menu.Item>
           <Menu.Item as={NavLink} to="/events" name="Meetups" />
+          <Menu.Item as={NavLink} to="/test" name="Test" />
           {authenticated && (
             <Menu.Item as={NavLink} to="/people" name="People" />
           )}
