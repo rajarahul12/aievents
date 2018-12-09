@@ -78,7 +78,7 @@ class EventForm extends Component {
               value={event.city}
               name="city"
               onChange={this.onInputChange}
-              placeholder="City Meetup is taking place"
+              placeholder="City where Meetup is going to taking place"
             />
           </Form.Field>
           <Form.Field>
