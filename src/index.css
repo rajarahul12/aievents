@@ -1,14 +1,9 @@
 body {
-  margin: 0;
-  padding: 0;
   background-color: rgb(234, 234, 234) !important;
 }
 
 /*timepicker style*/
-.react-datepicker__time-container
-  .react-datepicker__time
-  .react-datepicker__time-box
-  ul.react-datepicker__time-list {
+.react-datepicker__time-container .react-datepicker__time .react-datepicker__time-box ul.react-datepicker__time-list {
   padding-left: 0;
   padding-right: 0;
   width: 100px;
@@ -22,14 +17,15 @@ body {
   width: 100%;
 }
 
+
 /*home page styles*/
 
 .masthead {
   background-image: linear-gradient(
-    135deg,
-    rgb(24, 42, 115) 0%,
-    rgb(33, 138, 174) 69%,
-    rgb(32, 167, 172) 89%
+          135deg,
+          rgb(24, 42, 115) 0%,
+          rgb(33, 138, 174) 69%,
+          rgb(32, 167, 172) 89%
   ) !important;
 }
 
@@ -73,10 +69,10 @@ body {
 
 .ui.fixed.menu {
   background-image: linear-gradient(
-    135deg,
-    rgb(24, 42, 115) 0%,
-    rgb(33, 138, 174) 69%,
-    rgb(32, 167, 172) 89%
+          135deg,
+          rgb(24, 42, 115) 0%,
+          rgb(33, 138, 174) 69%,
+          rgb(32, 167, 172) 89%
   ) !important;
 }
 
@@ -94,11 +90,11 @@ body {
   margin-left: 0.5em;
 }
 
-.ui.menu .item > img:not(.ui) {
+.ui.menu .item>img:not(.ui) {
   margin-right: 1.5em !important;
 }
 
-.ui.menu:not(.vertical) .item > .button {
+.ui.menu:not(.vertical) .item>.button {
   margin-left: 0.5em;
 }
 
@@ -107,49 +103,4 @@ body {
 .ui.comments .comment .comments {
   padding-bottom: 0 !important;
   padding-left: 2em !important;
-}
-
-/* CSS GRid for SettingsDashboard */
-.grid-container {
-  display: flex;
-  flex-direction: row;
-  justify-content: space-between;
-  /* flex-wrap: wrap-reverse; */
-}
-
-@media (max-width: 700px) {
-  .grid-container {
-    flex-direction: column-reverse;
-    justify-content: center;
-    align-items: center;
-  }
-  .margin_adj {
-    padding-top: 30px;
-  }
-}
-
-.flex-container {
-  display: flex;
-  flex-direction: row;
-  justify-content: space-around;
-  /* align-items: center; */
-  /* flex-wrap: wrap-reverse; */
-}
-.width_adj {
-  width: 140%;
-}
-
-@media (max-width: 700px) {
-  .flex-container {
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-  }
-  .width_adj {
-    width: 120%;
-  }
-}
-
-.div1 {
-  width: 65%;
 }

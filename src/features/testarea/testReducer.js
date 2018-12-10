@@ -1,19 +1,17 @@
-import { createReducer } from "../../app/common/util/reducerUtil";
-import { INCREMENT_COUNTER, DECREMENT_COUNTER } from "./testConstants";
+import { INCREMENT_COUNTER, DECREMENT_COUNTER } from './testConstants';
+import { createReducer } from '../../app/common/util/reducerUtil'
 
 const initialState = {
-  data: 42
+  data: 43
 };
 
 export const incrementCounter = (state, payload) => {
   return { ...state, data: state.data + 1 };
-};
+}
 
 export const decrementCounter = (state, payload) => {
   return { ...state, data: state.data - 1 };
-};
-
-//Reducing the boilerplate
+}
 
 // const testReducer = (state = initialState, action) => {
 //   switch (action.type) {
@@ -25,8 +23,6 @@ export const decrementCounter = (state, payload) => {
 //       return state;
 //   }
 // };
-
-// export default testReducer;
 
 export default createReducer(initialState, {
   [INCREMENT_COUNTER]: incrementCounter,

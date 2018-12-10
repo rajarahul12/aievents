@@ -1,11 +1,12 @@
 import React, { Component } from "react";
-import { Segment, Form, Button } from "semantic-ui-react";
 import { connect } from "react-redux";
+import cuid from "cuid";
+import { Segment, Form, Button } from "semantic-ui-react";
 import { createEvent, updateEvent } from "../eventActions";
-import { cuid } from "cuid";
 
 const mapState = (state, ownProps) => {
   const eventId = ownProps.match.params.id;
+
   let event = {
     title: "",
     date: "",
@@ -13,11 +14,14 @@ const mapState = (state, ownProps) => {
     venue: "",
     hostedBy: ""
   };
+
   if (eventId && state.events.length > 0) {
     event = state.events.filter(event => event.id === eventId)[0];
   }
-  // console.log(event);
-  return event;
+
+  return {
+    event
+  };
 };
 
 const actions = {
@@ -34,6 +38,7 @@ class EventForm extends Component {
     evt.preventDefault();
     if (this.state.event.id) {
       this.props.updateEvent(this.state.event);
+      this.props.history.goBack();
     } else {
       const newEvent = {
         ...this.state.event,
@@ -54,61 +59,60 @@ class EventForm extends Component {
   };
 
   render() {
-    const { handleCancel } = this.props;
     const { event } = this.state;
     return (
       <Segment>
         <Form onSubmit={this.onFormSubmit}>
           <Form.Field>
-            <label>Meetup Title</label>
+            <label>Event Title</label>
             <input
-              value={event.title}
               name="title"
               onChange={this.onInputChange}
-              placeholder="Meetup Title"
+              value={event.title}
+              placeholder="Event Title"
             />
           </Form.Field>
           <Form.Field>
-            <label>Meetup Date</label>
+            <label>Event Date</label>
             <input
+              name="date"
+              onChange={this.onInputChange}
               value={event.date}
               type="date"
-              onChange={this.onInputChange}
-              name="date"
               placeholder="Event Date"
             />
           </Form.Field>
           <Form.Field>
             <label>City</label>
             <input
-              value={event.city}
               name="city"
               onChange={this.onInputChange}
-              placeholder="City where Meetup is going to taking place"
+              value={event.city}
+              placeholder="City event is taking place"
             />
           </Form.Field>
           <Form.Field>
             <label>Venue</label>
             <input
-              value={event.venue}
               name="venue"
               onChange={this.onInputChange}
-              placeholder="Enter the Venue of the Meetup"
+              value={event.venue}
+              placeholder="Enter the Venue of the event"
             />
           </Form.Field>
           <Form.Field>
             <label>Hosted By</label>
             <input
               name="hostedBy"
-              value={event.hostedBy}
               onChange={this.onInputChange}
+              value={event.hostedBy}
               placeholder="Enter the name of person hosting"
             />
           </Form.Field>
           <Button positive type="submit">
             Submit
           </Button>
-          <Button onClick={handleCancel} type="button">
+          <Button onClick={this.props.history.goBack} type="button">
             Cancel
           </Button>
         </Form>

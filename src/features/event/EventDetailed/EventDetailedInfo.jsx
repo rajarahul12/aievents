@@ -1,6 +1,7 @@
-import React from "react";
-import { Segment, Grid, Icon, Button } from "semantic-ui-react";
-const EventDetailedInfo = ({ event }) => {
+import React from 'react';
+import { Segment, Grid, Icon, Button } from 'semantic-ui-react';
+
+const EventDetailedInfo = ({event}) => {
   return (
     <Segment.Group>
       <Segment attached="top">
