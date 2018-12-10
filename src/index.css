@@ -127,3 +127,29 @@ body {
     padding-top: 30px;
   }
 }
+
+.flex-container {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+  /* align-items: center; */
+  /* flex-wrap: wrap-reverse; */
+}
+.width_adj {
+  width: 140%;
+}
+
+@media (max-width: 700px) {
+  .flex-container {
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+  }
+  .width_adj {
+    width: 120%;
+  }
+}
+
+.div1 {
+  width: 65%;
+}
