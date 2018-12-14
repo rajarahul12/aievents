@@ -1,10 +1,11 @@
-/* global google*/
+/*global google*/
 import React, { Component } from "react";
 import { connect } from "react-redux";
 import { reduxForm, Field } from "redux-form";
 import moment from "moment";
 import cuid from "cuid";
 import Script from "react-load-script";
+import { geocodeByAddress, getLatLng } from "react-places-autocomplete";
 import { Segment, Form, Button, Grid, Header } from "semantic-ui-react";
 import {
   composeValidators,
@@ -12,7 +13,6 @@ import {
   isRequired,
   hasLengthGreaterThan
 } from "revalidate";
-import { geocodeByAddress, getLatLng } from "react-places-autocomplete";
 import { createEvent, updateEvent } from "../eventActions";
 import TextInput from "../../../app/common/form/TextInput";
 import TextArea from "../../../app/common/form/TextArea";
@@ -57,9 +57,9 @@ const validate = combineValidators({
       message: "Description needs to be at least 5 characters"
     })
   )(),
-  city: isRequired("City"),
-  venue: isRequired("Venue"),
-  date: isRequired("Date")
+  city: isRequired("city"),
+  venue: isRequired("venue"),
+  date: isRequired("date")
 });
 
 class EventForm extends Component {
@@ -68,6 +68,8 @@ class EventForm extends Component {
     venueLatLng: {},
     scriptLoaded: false
   };
+
+  handleScriptLoaded = () => this.setState({ scriptLoaded: true });
 
   handleCitySelect = selectedCity => {
     geocodeByAddress(selectedCity)
@@ -113,14 +115,12 @@ class EventForm extends Component {
     }
   };
 
-  handleScriptLoaded = () => this.setState({ scriptLoaded: true });
-
   render() {
     const { invalid, submitting, pristine } = this.props;
     return (
       <Grid>
         <Script
-          url="https://maps.googleapis.com/maps/api/js?key=AIzaSyDgXi4ymO7EJp828E0zIEXU76v28r93yZA&libraries=places"
+          url="https://maps.googleapis.com/maps/api/js?v=weekly&key=AIzaSyCgntXs-i4ayUhzFtKpbJ8hqdai9e4Vlz0&libraries=places"
           onLoad={this.handleScriptLoaded}
         />
         <Grid.Column width={10}>
