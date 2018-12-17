@@ -1,15 +1,19 @@
 import React from "react";
 import { connect } from "react-redux";
-import { Form, Segment, Button, Label, Divider } from "semantic-ui-react";
+import { Form, Segment, Button, Label } from "semantic-ui-react";
 import { Field, reduxForm } from "redux-form";
 import { combineValidators, isRequired } from "revalidate";
 import TextInput from "../../../app/common/form/TextInput";
 import { registerUser } from "../authActions";
-import SocialLogin from "../SocialLogin/SocialLogin";
+// import SocialLogin from "../SocialLogin/SocialLogin";
 
 const actions = {
   registerUser
 };
+
+const mapState = state => ({
+  loading: state.async.loading
+});
 
 const validate = combineValidators({
   displayName: isRequired("Display Name"),
@@ -22,7 +26,8 @@ const RegisterForm = ({
   registerUser,
   error,
   invalid,
-  submitting
+  submitting,
+  loading
 }) => {
   return (
     <div>
@@ -52,6 +57,7 @@ const RegisterForm = ({
             </Label>
           )}
           <Button
+            loading={loading}
             disabled={invalid || submitting}
             fluid
             size="large"
@@ -59,8 +65,8 @@ const RegisterForm = ({
           >
             Register
           </Button>
-          <Divider horizontal>Or</Divider>
-          <SocialLogin />
+          {/* <Divider horizontal>Or</Divider>
+          <SocialLogin socialLogin={socialLogin} /> */}
         </Segment>
       </Form>
     </div>
@@ -68,6 +74,6 @@ const RegisterForm = ({
 };
 
 export default connect(
-  null,
+  mapState,
   actions
 )(reduxForm({ form: "registerForm", validate })(RegisterForm));

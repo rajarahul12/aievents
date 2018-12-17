@@ -5,13 +5,18 @@ import { Field, reduxForm } from "redux-form";
 import TextInput from "../../../app/common/form/TextInput";
 import { login, socialLogin } from "../authActions";
 import SocialLogin from "../SocialLogin/SocialLogin";
+import { invalid } from "moment";
 
 const actions = {
   login,
   socialLogin
 };
 
-const LoginForm = ({ login, handleSubmit, error, socialLogin }) => {
+const mapState = state => ({
+  loading: state.async.loading
+});
+
+const LoginForm = ({ login, handleSubmit, error, socialLogin, loading }) => {
   return (
     <Form size="large" onSubmit={handleSubmit(login)}>
       <Segment>
@@ -32,17 +37,17 @@ const LoginForm = ({ login, handleSubmit, error, socialLogin }) => {
             {error}
           </Label>
         )}
-        <Button fluid size="large" color="teal">
+        <Button loading={loading} fluid size="large" color="teal">
           Login
         </Button>
         <Divider horizontal>Or</Divider>
-        <SocialLogin socialLogin={socialLogin} />
+        <SocialLogin loading={loading} socialLogin={socialLogin} />
       </Segment>
     </Form>
   );
 };
 
 export default connect(
-  null,
+  mapState,
   actions
 )(reduxForm({ form: "loginForm" })(LoginForm));

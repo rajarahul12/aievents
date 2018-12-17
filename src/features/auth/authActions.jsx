@@ -1,17 +1,25 @@
 import { SubmissionError, reset } from "redux-form";
 import { toastr } from "react-redux-toastr";
 import { closeModal } from "../modals/modalActions";
+import {
+  asyncActionStart,
+  asyncActionFinish,
+  asyncActionError
+} from "../async/asyncActions";
 
 export const login = creds => {
   return async (dispatch, getState, { getFirebase }) => {
     const firebase = getFirebase();
     try {
+      dispatch(asyncActionStart());
       await firebase
         .auth()
         .signInWithEmailAndPassword(creds.email, creds.password);
       dispatch(closeModal());
+      dispatch(asyncActionFinish());
     } catch (error) {
       // console.log(error);
+      dispatch(asyncActionError());
       throw new SubmissionError({
         _error: error.message
       });
@@ -24,6 +32,7 @@ export const registerUser = user => {
     const firebase = getFirebase();
     const firestore = getFirestore();
     try {
+      dispatch(asyncActionStart());
       //create the user in auth
       let createdUser = await firebase
         .auth()
@@ -40,7 +49,9 @@ export const registerUser = user => {
       };
       await firestore.set(`users/${createdUser.uid}`, { ...newUser });
       dispatch(closeModal());
+      dispatch(asyncActionFinish());
     } catch (error) {
+      dispatch(asyncActionError());
       throw new SubmissionError({ _error: error.message });
     }
   };
@@ -64,7 +75,7 @@ export const socialLogin = selectedProvider => {
         });
       }
     } catch (error) {
-      console.log(error);
+      throw new SubmissionError({ _error: error.message });
     }
   };
 };
