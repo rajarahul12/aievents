@@ -1,31 +1,39 @@
 import React, { Component } from "react";
 import { Grid } from "semantic-ui-react";
-import { withFirestore } from "react-redux-firebase";
 import { connect } from "react-redux";
-// import { toastr } from "react-redux-toastr";
+import { withFirestore, firebaseConnect, isEmpty } from "react-redux-firebase";
+import { compose } from "redux";
 import EventDetailedHeader from "./EventDetailedHeader";
 import EventDetailedInfo from "./EventDetailedInfo";
 import EventDetailedChat from "./EventDetailedChat";
 import EventDetailedSidebar from "./EventDetailedSidebar";
-import { objectToArray } from "../../../app/common/util/helpers";
+import {
+  objectToArray,
+  createDataTree
+} from "../../../app/common/util/helpers";
 import { goingToEvent, cancelGoingToEvent } from "../../user/userActions";
-import LoadingComponent from "../../../app/layout/LoadingComponent";
+import { addEventComment } from "../eventActions";
 
-const mapState = state => {
+const mapState = (state, ownProps) => {
   let event = {};
+
   if (state.firestore.ordered.events && state.firestore.ordered.events[0]) {
     event = state.firestore.ordered.events[0];
   }
+
   return {
     event,
     auth: state.firebase.auth,
-    requesting: state.firestore.status.requesting
+    eventChat:
+      !isEmpty(state.firebase.data.event_chat) &&
+      objectToArray(state.firebase.data.event_chat[ownProps.match.params.id])
   };
 };
 
 const actions = {
   goingToEvent,
-  cancelGoingToEvent
+  cancelGoingToEvent,
+  addEventComment
 };
 
 class EventDetailedPage extends Component {
@@ -45,42 +53,44 @@ class EventDetailedPage extends Component {
       auth,
       goingToEvent,
       cancelGoingToEvent,
-      requesting
+      addEventComment,
+      eventChat
     } = this.props;
     const attendees =
       event && event.attendees && objectToArray(event.attendees);
-
     const isHost = event.hostUid === auth.uid;
     const isGoing = attendees && attendees.some(a => a.id === auth.uid);
-    const loading = Object.values(requesting).some(a => a === true);
-    if (loading) {
-      return <LoadingComponent inverted={true} />;
-    } else {
-      return (
-        <Grid>
-          <Grid.Column width={10}>
-            <EventDetailedHeader
-              event={event}
-              isHost={isHost}
-              isGoing={isGoing}
-              goingToEvent={goingToEvent}
-              cancelGoingToEvent={cancelGoingToEvent}
-            />
-            <EventDetailedInfo event={event} />
-            <EventDetailedChat />
-          </Grid.Column>
-          <Grid.Column width={6}>
-            <EventDetailedSidebar attendees={attendees} />
-          </Grid.Column>
-        </Grid>
-      );
-    }
+    const chatTree = !isEmpty(eventChat) && createDataTree(eventChat);
+    return (
+      <Grid>
+        <Grid.Column width={10}>
+          <EventDetailedHeader
+            event={event}
+            isHost={isHost}
+            isGoing={isGoing}
+            goingToEvent={goingToEvent}
+            cancelGoingToEvent={cancelGoingToEvent}
+          />
+          <EventDetailedInfo event={event} />
+          <EventDetailedChat
+            eventChat={chatTree}
+            addEventComment={addEventComment}
+            eventId={event.id}
+          />
+        </Grid.Column>
+        <Grid.Column width={6}>
+          <EventDetailedSidebar attendees={attendees} />
+        </Grid.Column>
+      </Grid>
+    );
   }
 }
 
-export default withFirestore(
+export default compose(
+  withFirestore,
   connect(
     mapState,
     actions
-  )(EventDetailedPage)
-);
+  ),
+  firebaseConnect(props => [`event_chat/${props.match.params.id}`])
+)(EventDetailedPage);
