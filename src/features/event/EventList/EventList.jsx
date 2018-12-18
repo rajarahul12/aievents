@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import EventListItem from "./EventListItem";
 import InfiniteScroll from "react-infinite-scroller";
 
+//This is where infinite scrolling is implemented
 class EventList extends Component {
   render() {
     const { events, getNextEvents, loading, moreEvents } = this.props;
