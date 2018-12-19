@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { Grid } from "semantic-ui-react";
+import { Grid, Loader } from "semantic-ui-react";
 import { connect } from "react-redux";
 import { firestoreConnect } from "react-redux-firebase";
 import { getEventsForDashboard } from "../eventActions";
@@ -93,9 +93,9 @@ class EventDashboard extends Component {
             contextRef={this.state.contextRef}
           />
         </Grid.Column>
-        {/* <Grid.Column width={10}>
+        <Grid.Column width={10} style={{ marginBottom: "20px" }}>
           <Loader active={loading} />
-        </Grid.Column> */}
+        </Grid.Column>
       </Grid>
     );
   }
