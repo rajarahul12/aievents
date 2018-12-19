@@ -24,7 +24,7 @@ export const updateProfile = user => async (
     await firebase.updateProfile(updatedUser);
     toastr.success("Success", "Profile updated");
   } catch (error) {
-    console.log(error);
+    // console.log(error);
   }
 };
 
@@ -72,7 +72,7 @@ export const uploadProfileImage = (file, fileName) => async (
     );
     dispatch(asyncActionFinish());
   } catch (error) {
-    console.log(error);
+    // console.log(error);
     dispatch(asyncActionError());
     throw new Error("Problem uploading photo");
   }
@@ -94,7 +94,7 @@ export const deletePhoto = photo => async (
       subcollections: [{ collection: "photos", doc: photo.id }]
     });
   } catch (error) {
-    console.log(error);
+    // console.log(error);
     throw new Error("Problem deleting the photo");
   }
 };
@@ -135,11 +135,11 @@ export const setMainPhoto = photo => async (dispatch, getState) => {
         });
       }
     }
-    console.log(batch);
+    // console.log(batch);
     await batch.commit();
     dispatch(asyncActionFinish());
   } catch (error) {
-    console.log(error);
+    // console.log(error);
     dispatch(asyncActionError());
     throw new Error("Problem setting main photo");
   }
@@ -149,12 +149,12 @@ export const goingToEvent = event => async (dispatch, getState) => {
   dispatch(asyncActionStart());
   const firestore = firebase.firestore();
   const user = firebase.auth().currentUser;
-  const photoURL = getState().firebase.profile.photoURL;
+  const profile = getState().firebase.profile;
   const attendee = {
     going: true,
     joinDate: Date.now(),
-    photoURL: photoURL || "/assets/user.png",
-    displayName: user.displayName,
+    photoURL: profile.photoURL || "/assets/user.png",
+    displayName: profile.displayName,
     host: false
   };
   try {
@@ -178,7 +178,7 @@ export const goingToEvent = event => async (dispatch, getState) => {
     dispatch(asyncActionFinish());
     toastr.success("Success", "You have signed up to the event");
   } catch (error) {
-    console.log(error);
+    // console.log(error);
     dispatch(asyncActionError());
     toastr.error("Oops", "Problem signing up to event");
   }
@@ -198,7 +198,7 @@ export const cancelGoingToEvent = event => async (
     await firestore.delete(`event_attendee/${event.id}_${user.uid}`);
     toastr.success("Success", "You have removed yourself from the event");
   } catch (error) {
-    console.log(error);
+    // console.log(error);
     toastr.error("Oops", "something went wrong");
   }
 };
@@ -277,7 +277,7 @@ export const followUser = userToFollow => async (
       following
     );
   } catch (error) {
-    console.log(error);
+    // console.log(error);
   }
 };
 
@@ -295,6 +295,6 @@ export const unfollowUser = userToUnfollow => async (
       subcollections: [{ collection: "following", doc: userToUnfollow.id }]
     });
   } catch (error) {
-    console.log(error);
+    // console.log(error);
   }
 };
