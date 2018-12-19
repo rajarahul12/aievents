@@ -7,7 +7,7 @@ import EventDetailedHeader from "./EventDetailedHeader";
 import EventDetailedInfo from "./EventDetailedInfo";
 import EventDetailedChat from "./EventDetailedChat";
 import EventDetailedSidebar from "./EventDetailedSidebar";
-import LoadingComponent from "../../../app/layout/LoadingComponent";
+// import LoadingComponent from "../../../app/layout/LoadingComponent";
 
 import {
   objectToArray,
@@ -35,7 +35,6 @@ const mapState = (state, ownProps) => {
 
 const actions = {
   goingToEvent,
-
   cancelGoingToEvent,
   addEventComment
 };
@@ -66,31 +65,30 @@ class EventDetailedPage extends Component {
     const isHost = event.hostUid === auth.uid;
     const isGoing = attendees && attendees.some(a => a.id === auth.uid);
     const chatTree = !isEmpty(eventChat) && createDataTree(eventChat);
-    if (loading) return <LoadingComponent inverted={true} />;
-    else {
-      return (
-        <Grid>
-          <Grid.Column width={10}>
-            <EventDetailedHeader
-              event={event}
-              isHost={isHost}
-              isGoing={isGoing}
-              goingToEvent={goingToEvent}
-              cancelGoingToEvent={cancelGoingToEvent}
-            />
-            <EventDetailedInfo event={event} />
-            <EventDetailedChat
-              eventChat={chatTree}
-              addEventComment={addEventComment}
-              eventId={event.id}
-            />
-          </Grid.Column>
-          <Grid.Column width={6}>
-            <EventDetailedSidebar attendees={attendees} />
-          </Grid.Column>
-        </Grid>
-      );
-    }
+    // if (loading) return <LoadingComponent inverted={true} />;
+    return (
+      <Grid>
+        <Grid.Column width={10}>
+          <EventDetailedHeader
+            event={event}
+            loading={loading}
+            isHost={isHost}
+            isGoing={isGoing}
+            goingToEvent={goingToEvent}
+            cancelGoingToEvent={cancelGoingToEvent}
+          />
+          <EventDetailedInfo event={event} />
+          <EventDetailedChat
+            eventChat={chatTree}
+            addEventComment={addEventComment}
+            eventId={event.id}
+          />
+        </Grid.Column>
+        <Grid.Column width={6}>
+          <EventDetailedSidebar attendees={attendees} />
+        </Grid.Column>
+      </Grid>
+    );
   }
 }
 
