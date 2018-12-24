@@ -4,7 +4,9 @@ import { Link } from "react-router-dom";
 import format from "date-fns/format";
 
 const eventImageStyle = {
-  filter: "brightness(30%)"
+  filter: "brightness(30%)",
+  height: "400px",
+  width: "700px"
 };
 
 const eventImageTextStyle = {
@@ -34,7 +36,7 @@ const EventDetailedHeader = ({
     <Segment.Group>
       <Segment basic attached="top" style={{ padding: "0" }}>
         <Image
-          src={`/assets/categoryImages/${event.category}.jpg`}
+          src={`/assets/categoryImages/${event.category}.jpeg`}
           fluid
           style={eventImageStyle}
         />

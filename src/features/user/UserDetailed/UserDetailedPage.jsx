@@ -7,7 +7,6 @@ import { toastr } from "react-redux-toastr";
 import UserDetailedHeader from "./UserDetailedHeader";
 import UserDetailedDescription from "./UserDetailedDescription";
 import UserDetailedPhotos from "./UserDetailedPhotos";
-import UserDetailedSidebar from "./UserDetailedSidebar";
 import UserDetailedEvents from "./UserDetailedEvents";
 import { userDetailedQuery } from "../userQueries";
 import LoadingComponent from "../../../app/layout/LoadingComponent";
@@ -80,15 +79,24 @@ class UserDetailedPage extends Component {
       return <LoadingComponent inverted={true} />;
     } else {
       return (
-        <Grid>
-          <UserDetailedHeader profile={profile} />
-          <UserDetailedSidebar
+        <Grid centered>
+          <Grid.Column width={12}>
+            <UserDetailedHeader
+              profile={profile}
+              isFollowing={isFollowing}
+              isCurrentUser={isCurrentUser}
+              unfollowUser={unfollowUser}
+              followUser={followUser}
+            />
+          </Grid.Column>
+
+          {/* <UserDetailedSidebar
             isFollowing={isFollowing}
             isCurrentUser={isCurrentUser}
             unfollowUser={unfollowUser}
             followUser={followUser}
             profile={profile}
-          />
+          /> */}
           <UserDetailedDescription profile={profile} />
           {photos && photos.length > 0 && (
             <UserDetailedPhotos photos={photos} />

@@ -13,7 +13,7 @@ const panes = [
 const UserDeteiledEvents = ({ events, eventsLoading, changeTab }) => {
   return (
     <Grid.Column width={12}>
-      <Segment attached loading={eventsLoading}>
+      <Segment attached loading={eventsLoading} style={{ overflow: "auto" }}>
         <Header icon="calendar" content="Events" />
         <Tab
           onTabChange={(e, data) => changeTab(e, data)}
@@ -21,11 +21,19 @@ const UserDeteiledEvents = ({ events, eventsLoading, changeTab }) => {
           menu={{ secondary: true, pointing: true }}
         />
         <br />
-        <Card.Group itemsPerRow={5}>
+        <Card.Group style={{ overflow: "auto" }}>
           {events &&
             events.map(event => (
-              <Card as={Link} to={`/event/${event.id}`} key={event.id}>
-                <Image src={`/assets/categoryImages/${event.category}.jpg`} />
+              <Card
+                style={{ height: "250px", width: "150px" }}
+                as={Link}
+                to={`/event/${event.id}`}
+                key={event.id}
+              >
+                <Image
+                  style={{ height: "100px", width: "150px" }}
+                  src={`/assets/categoryImages/${event.category}.jpeg`}
+                />
                 <Card.Content>
                   <Card.Header textAlign="center">{event.title}</Card.Header>
                   <Card.Meta textAlign="center">

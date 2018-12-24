@@ -24,6 +24,13 @@ body {
   text-align: center;
 }
 
+@media (max-width: 770px) {
+  .img_eventlist {
+    width: 250px;
+    height: 250px;
+  }
+}
+
 /*home page styles*/
 
 .masthead {

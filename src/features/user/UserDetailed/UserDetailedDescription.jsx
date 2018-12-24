@@ -10,9 +10,17 @@ const UserDetailedDescription = ({ profile }) => {
   return (
     <Grid.Column width={12}>
       <Segment>
-        <Grid columns={2}>
+        <Grid stackable divided textAlign="center" columns={2}>
           <Grid.Column width={10}>
-            <Header icon="smile" content={`About ${profile.displayName}`} />
+            <Header as="h2" icon textAlign="center">
+              <Icon name="smile" />
+              <Header.Content>{`About ${profile.displayName}`}</Header.Content>
+            </Header>
+            {/* <Header
+              icon="smile"
+              style={{ textAlign: "center" }}
+              content={`About ${profile.displayName}`}
+            /> */}
             <p>
               I am a: <strong>{profile.occupation || "tbn"}</strong>
             </p>
@@ -25,7 +33,11 @@ const UserDetailedDescription = ({ profile }) => {
             <p>{profile.description}</p>
           </Grid.Column>
           <Grid.Column width={6}>
-            <Header icon="heart outline" content="Interests" />
+            <Header as="h2" icon textAlign="center">
+              <Icon name="heart outline" />
+              <Header.Content>"Interests</Header.Content>
+            </Header>
+            {/* <Header icon="heart outline" content="Interests" /> */}
             {profile.interests ? (
               <List>
                 {profile.interests &&

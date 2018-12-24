@@ -30,7 +30,8 @@ class EventDashboard extends Component {
     moreEvents: false,
     loadingInitial: true,
     loadedEvents: [],
-    contextRef: {}
+    contextRef: {},
+    width: 0
   };
 
   async componentDidMount() {
@@ -43,6 +44,9 @@ class EventDashboard extends Component {
         loadingInitial: false
       });
     }
+    this.setState({
+      width: window.innerWidth
+    });
   }
 
   componentWillReceiveProps(nextProps) {
@@ -73,31 +77,52 @@ class EventDashboard extends Component {
   render() {
     const { loading, activities } = this.props;
     const { moreEvents, loadedEvents } = this.state;
-    if (this.state.loadingInitial) return <LoadingComponent inverted={true} />;
-
-    return (
-      <Grid>
-        <Grid.Column width={10}>
-          <div ref={this.handleContextRef}>
-            <EventList
-              loading={loading}
-              moreEvents={moreEvents}
-              events={loadedEvents}
-              getNextEvents={this.getNextEvents}
-            />
+    if (this.state.width <= 600) {
+      if (this.state.loadingInitial)
+        return <LoadingComponent inverted={true} />;
+      else {
+        return (
+          <div>
+            <div ref={this.handleContextRef}>
+              <EventList
+                loading={loading}
+                moreEvents={moreEvents}
+                events={loadedEvents}
+                getNextEvents={this.getNextEvents}
+              />
+            </div>
           </div>
-        </Grid.Column>
-        <Grid.Column width={6}>
-          <EventActivity
-            activities={activities}
-            contextRef={this.state.contextRef}
-          />
-        </Grid.Column>
-        <Grid.Column width={10} style={{ marginBottom: "20px" }}>
-          <Loader active={loading} />
-        </Grid.Column>
-      </Grid>
-    );
+        );
+      }
+    } else {
+      if (this.state.loadingInitial)
+        return <LoadingComponent inverted={true} />;
+      else {
+        return (
+          <Grid>
+            <Grid.Column width={10}>
+              <div ref={this.handleContextRef}>
+                <EventList
+                  loading={loading}
+                  moreEvents={moreEvents}
+                  events={loadedEvents}
+                  getNextEvents={this.getNextEvents}
+                />
+              </div>
+            </Grid.Column>
+            <Grid.Column width={6}>
+              <EventActivity
+                activities={activities}
+                contextRef={this.state.contextRef}
+              />
+            </Grid.Column>
+            <Grid.Column width={10} style={{ marginBottom: "20px" }}>
+              <Loader active={loading} />
+            </Grid.Column>
+          </Grid>
+        );
+      }
+    }
   }
 }
 

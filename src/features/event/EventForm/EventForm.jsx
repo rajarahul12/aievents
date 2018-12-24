@@ -40,12 +40,11 @@ const actions = {
 };
 
 const category = [
-  { key: "drinks", text: "Drinks", value: "drinks" },
-  { key: "culture", text: "Culture", value: "culture" },
-  { key: "film", text: "Film", value: "film" },
-  { key: "food", text: "Food", value: "food" },
-  { key: "music", text: "Music", value: "music" },
-  { key: "travel", text: "Travel", value: "travel" }
+  { key: "coding", text: "Coding", value: "coding" },
+  { key: "ai", text: "Artificial Inteliigence", value: "ai" },
+  { key: "ml", text: "Machine Learning", value: "ml" },
+  { key: "dl", text: "Deep Learning", value: "dl" },
+  { key: "python", text: "Python", value: "python" }
 ];
 
 const validate = combineValidators({
@@ -131,7 +130,7 @@ class EventForm extends Component {
       loading
     } = this.props;
     return (
-      <Grid>
+      <Grid centered columns={10}>
         <Script
           url="https://maps.googleapis.com/maps/api/js?key=AIzaSyC1Oy3Ic6JyE6RR4eEbEFw2T-ynXjjWzTc&libraries=places"
           onLoad={this.handleScriptLoaded}
