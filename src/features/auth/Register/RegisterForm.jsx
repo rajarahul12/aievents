@@ -1,14 +1,17 @@
-import React from "react";
+import React, { Component } from "react";
 import { connect } from "react-redux";
-import { Form, Segment, Button, Label } from "semantic-ui-react";
+import { Form, Segment, Button, Label, Divider } from "semantic-ui-react";
 import { Field, reduxForm } from "redux-form";
 import { combineValidators, isRequired } from "revalidate";
 import TextInput from "../../../app/common/form/TextInput";
 import { registerUser } from "../authActions";
 // import SocialLogin from "../SocialLogin/SocialLogin";
+import { openModal, closeModal } from "../../modals/modalActions";
 
 const actions = {
-  registerUser
+  registerUser,
+  openModal,
+  closeModal
 };
 
 const mapState = state => ({
@@ -21,57 +24,77 @@ const validate = combineValidators({
   password: isRequired("Password")
 });
 
-const RegisterForm = ({
-  handleSubmit,
-  registerUser,
-  error,
-  invalid,
-  submitting,
-  loading
-}) => {
-  return (
-    <div>
-      <Form size="large" onSubmit={handleSubmit(registerUser)}>
-        <Segment>
-          <Field
-            name="displayName"
-            type="text"
-            component={TextInput}
-            placeholder="Known As"
-          />
-          <Field
-            name="email"
-            type="text"
-            component={TextInput}
-            placeholder="Email"
-          />
-          <Field
-            name="password"
-            type="password"
-            component={TextInput}
-            placeholder="Password"
-          />
-          {error && (
-            <Label basic color="red">
-              {error}
-            </Label>
-          )}
-          <Button
-            loading={loading}
-            disabled={invalid || submitting}
-            fluid
-            size="large"
-            color="teal"
-          >
-            Register
-          </Button>
-          {/* <Divider horizontal>Or</Divider>
+class RegisterForm extends Component {
+  handleLoginInRegister = () => {
+    this.props.closeModal();
+    this.props.openModal("LoginModal");
+  };
+
+  render() {
+    const {
+      handleSubmit,
+      registerUser,
+      error,
+      invalid,
+      submitting,
+      loading
+    } = this.props;
+    return (
+      <div>
+        <Form size="large" onSubmit={handleSubmit(registerUser)}>
+          <Segment>
+            <Field
+              name="displayName"
+              type="text"
+              component={TextInput}
+              placeholder="Display Name"
+            />
+            <Field
+              name="email"
+              type="text"
+              component={TextInput}
+              placeholder="Email"
+            />
+            <Field
+              name="password"
+              type="password"
+              component={TextInput}
+              placeholder="Password"
+            />
+            {error && (
+              <Label basic color="red">
+                {error}
+              </Label>
+            )}
+            <Button
+              loading={loading}
+              disabled={invalid || submitting}
+              fluid
+              size="large"
+              color="teal"
+            >
+              Register
+            </Button>
+
+            {/* <Divider horizontal>Or</Divider>
           <SocialLogin socialLogin={socialLogin} /> */}
-        </Segment>
-      </Form>
-    </div>
-  );
-};
+          </Segment>
+        </Form>
+        <Divider horizontal>Or</Divider>
+        <h4 className="text-align">Already a User / To continue with Google</h4>
+        <Button
+          onClick={this.handleLoginInRegister}
+          disabled={loading}
+          fluid
+          size="large"
+          color="teal"
+        >
+          Proceed to Login Form
+        </Button>
+      </div>
+    );
+  }
+}
 
 export default connect(
   mapState,
